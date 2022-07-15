@@ -1,6 +1,8 @@
 local Library = {}
 
 function Library:Create(Name,LowerName)
+
+
 	local UI_Library = Instance.new("ScreenGui")
 	local Main = Instance.new("Frame")
 	local MainUICorner = Instance.new("UICorner")
@@ -14,7 +16,7 @@ function Library:Create(Name,LowerName)
 	local Tabs = Instance.new("Folder")
 
 	UI_Library.Name = "UI_Library"
-	UI_Library.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	UI_Library.Parent = game:GetService("CoreGui")
 
 	Main.Name = "Main"
 	Main.Parent = UI_Library
@@ -88,6 +90,45 @@ function Library:Create(Name,LowerName)
 		task.wait(0.25)
 		Main:TweenPosition(UDim2.new(0.5,0,0.5,0), Enum.EasingDirection.InOut, Enum.EasingStyle.Quart, 1.2)
 	end)
+	
+	
+	local dragToggle = nil
+	local dragSpeed = .5 -- You can edit this.
+	local dragInput = nil
+	local dragStart = nil
+	local dragPos = nil
+	
+	local function updateInput(input)
+		local Delta = input.Position - dragStart
+		local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
+		game:GetService("TweenService"):Create(Main, TweenInfo.new(.25), {Position = Position}):Play()
+	end
+	
+	Main.InputBegan:Connect(function(input)
+		if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then
+			dragToggle = true
+			dragStart = input.Position
+			startPos = Main.Position
+			input.Changed:Connect(function()
+				if (input.UserInputState == Enum.UserInputState.End) then
+					dragToggle = false
+				end
+			end)
+		end
+	end)
+	
+	Main.InputChanged:Connect(function(input)
+		if (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+			dragInput = input
+		end
+	end)
+	
+	game:GetService("UserInputService").InputChanged:Connect(function(input)
+		if (input == dragInput and dragToggle) then
+			updateInput(input)
+		end
+	end)
+	
 	local Library2 = {}
 	
 	function Library2:MakeTab(Name, ImageId)
