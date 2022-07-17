@@ -26,18 +26,18 @@ Damage.new=function(pos,size,damage,damr,knockback,kbr,ignore)
 	assert(pos,"arg 1 'position' lacking")
 	assert(typeof(pos)=="Vector3" or typeof(pos)=="CFrame","position must be a Vector3 value either or CFrame value")
 	assert(typeof(size)=="number" or typeof(size)=="Vector3" or typeof(size)=="CFrame","arg 2 'size' isn't number, CFrame or Vector3")
-	size=size or 1
-	damage=damage or 10
-	knockback=knockback or 5
-	damr=damr or 10
-	kbr=kbr or 5
+	size=size or 0
+	damage=damage or 0
+	knockback=knockback or 0
+	damr=damr or 0
+	kbr=kbr or 0
 	ignore=ignore or {}
 	if typeof(pos)=="CFrame" then pos=pos.Position end
 	if typeof(size)=="number" then size=Vector3.new(1,1,1)*size elseif typeof(size)=="CFrame" then size=size.Position end
 	local CurrentData={
 		Position=pos,
 		Size=size,
-		Damage=damage,
+		Damage=0,
 		DamageSpread=damr,
 		Knockback=knockback,
 		KnockbackSpread=kbr,
