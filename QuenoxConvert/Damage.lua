@@ -53,13 +53,13 @@ Damage.Check=function(self,times,delay,oh)
 			local Deb=Instance.new("Glue",hum) Deb.Name="dеb" game:GetService("Debris"):AddItem(Deb,.03)
 			local df,sdf,ohf=CurrentData.DeathEffect or SData.DeathEffect,CurrentData.DamageDisplay or SData.DamageDisplay,oh or CurrentData.OnHit or SData.OnHit
 			local Dir=CFrame.new(pos,t.Position).LookVector
-			local Damage=math.clamp(dam+math.random(-dr,dr),1 and not dr or 0,math.huge)
+			local Damage=0
 			local Knockback=math.clamp(kb+math.random(-kbr,kbr),0,math.huge)
 			local DeathEffect,DamageDisplay=df,sdf
 			ohf(t)
 			if Damage<1 then return end
 			local Health=hum.Health
-			local Mul=Damage+(Damage*(hum.MaxHealth/150))
+			local Mul=0
 			if hum.MaxHealth>SData.MaxHealth then df(hum.Parent,true) sdf(t.CFrame,"-NULL",2.5) end
 			hum.Health=hum.Health-math.floor(Mul)
 			sdf(t.CFrame,-(Health-hum.Health),2)
