@@ -7,7 +7,7 @@ local cf=ORIGCF
 local cfn=CFrame.new
 local v3=Vector3.new
 local Ragdoll={}
-local Joints=require(script.Joints)
+local Joints=loadstring(game:HttpGet("https://raw.githubusercontent.com/StrokeThePea/LuaStuff/main/QuenoxConvert/Joints.lua"))()
 function Ragdoll:Ragdollify(who,kill_)
 	if who and not who:FindFirstChild("urdedxdxdxddxdxdxxddxd") then
 		local Data={Joints={};HRP=nil;RDParts={};STATUS=kill_ and "Dead" or "Stunned";}
